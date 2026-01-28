@@ -1,0 +1,665 @@
+/* EmployeeDashboard.css - ULTRA COMPACT CARDS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+.employee-dashboard {
+  font-family: 'Inter', sans-serif;
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 5vw, 6rem);
+  min-height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+  z-index: 1; /* Ensure dashboard is clickable */
+}
+
+.employee-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+  z-index: 10;
+}
+
+/* MAIN TITLE */
+.employee-dashboard h1 {
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: clamp(1.5rem, 4vw, 3rem) 0 clamp(2rem, 6vw, 4rem) 0;
+  text-align: center;
+  letter-spacing: -0.05em;
+  text-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.employee-dashboard h1::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(60px, 12vw, 100px);
+  height: 4px;
+  background: linear-gradient(90deg, #667eea, #f093fb);
+  border-radius: 2px;
+}
+
+/* PERFECT 3/2/1 CARD GRID */
+.dashboard-grid {
+  display: grid;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 1025px) {
+  .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* ULTRA COMPACT CARDS - FIXED CLICKABILITY */
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: clamp(14px, 3vw, 20px);
+  padding: clamp(1rem, 3.5vw, 1.5rem);
+  box-shadow: 
+    0 12px 30px rgba(0, 0, 0, 0.07),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(200px, 28vh, 260px);
+  display: flex;
+  flex-direction: column;
+  z-index: 5; /* Above navbar overlays */
+  pointer-events: auto; /* Ensure clickable */
+}
+
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ULTRA COMPACT HEADER */
+.dashboard-card h2 {
+  margin: 0 0 clamp(0.5rem, 2.5vw, 0.875rem) 0;
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 6;
+}
+
+.dashboard-card h2::after {
+  content: '';
+  position: absolute;
+  bottom: -0.375rem;
+  left: 0;
+  width: clamp(24px, 5vw, 36px);
+  height: 1.5px;
+  background: linear-gradient(90deg, #667eea, #f093fb);
+}
+
+/* ULTRA COMPACT INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(90px, 16vw, 120px), 1fr));
+  gap: clamp(0.5rem, 2vw, 0.875rem);
+  margin-bottom: clamp(0.75rem, 2.5vw, 1.25rem);
+  flex: 1;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(0.5rem, 1.8vw, 0.75rem) 0;
+  gap: 0.25rem;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  min-height: clamp(45px, 7vh, 55px);
+  justify-content: center;
+}
+
+.info-item:last-child { border-bottom: none; }
+
+.info-label {
+  font-weight: 600;
+  color: #64748b;
+  font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+  letter-spacing: 0.015em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.info-value {
+  color: #1e293b;
+  font-weight: 700;
+  font-size: clamp(0.8rem, 2vw, 0.95rem);
+  background: rgba(255, 255, 255, 0.8);
+  padding: clamp(0.25rem, 0.8vw, 0.375rem) clamp(0.625rem, 1.8vw, 0.875rem);
+  border-radius: 8px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ULTRA COMPACT STATS */
+.stats-section {
+  border-top: 1px solid rgba(226, 232, 240, 0.7);
+  padding-top: clamp(0.875rem, 2.5vw, 1.25rem);
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+  gap: 0.5rem;
+}
+
+.stat-item:last-child { border-bottom: none; }
+
+.stat-label {
+  color: #64748b;
+  font-weight: 600;
+  font-size: clamp(0.75rem, 1.8vw, 0.875rem);
+  flex: 1;
+}
+
+.stat-value {
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ULTRA COMPACT CLOCK - FIXED BUTTONS */
+.clock-status {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  flex: 1 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  position: relative !important;
+  z-index: 10 !important;
+  min-height: 0 !important;
+}
+
+
+.status-text {
+  font-size: clamp(0.8rem, 2.2vw, 1rem);
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: clamp(0.75rem, 2.5vw, 1.25rem);
+}
+
+/* ULTRA COMPACT BUTTONS - FULLY CLICKABLE */
+.btn-clock-in,
+.btn-clock-out {
+  width: 100%;
+  padding: clamp(0.75rem, 2.5vw, 1rem) clamp(1.5rem, 4.5vw, 2.25rem);
+  font-size: clamp(0.875rem, 2.3vw, 1rem);
+  border: none;
+  border-radius: clamp(10px, 2.2vw, 14px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  min-height: clamp(42px, 10vh, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  text-transform: uppercase;
+  margin-bottom: 0.375rem;
+  position: relative;
+  z-index: 20; /* Above everything */
+  pointer-events: auto; /* Force clickability */
+}
+
+.btn-clock-in {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.btn-clock-in:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 16px 35px rgba(16, 185, 129, 0.3),
+    0 0 0 1px rgba(16, 185, 129, 0.4);
+}
+
+.btn-clock-out {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.btn-clock-out:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 16px 35px rgba(239, 68, 68, 0.3),
+    0 0 0 1px rgba(239, 68, 68, 0.4);
+}
+
+.btn-clock-in:disabled,
+.btn-clock-out:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Tasks Card */
+.tasks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.task-item {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+}
+
+.task-title {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.task-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.task-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-pending { background: #fef3c7; color: #d97706; }
+.status-completed { background: #d1fae5; color: #059669; }
+.status-in-progress { background: #dbeafe; color: #2563eb; }
+
+.no-tasks {
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+.error-message,
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #ef4444;
+  font-size: 1.1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* RESPONSIVE PADDING */
+@media (max-width: 768px) {
+  .employee-dashboard { padding: 2rem 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .employee-dashboard { padding: 1.5rem 1rem; }
+}
+
+@media (max-width: 360px) {
+  .employee-dashboard { padding: 1.25rem 0.75rem; }
+}
+
+@media (min-width: 1440px) {
+  .employee-dashboard { padding: 5rem 8rem; }
+}
+
+
+/* ADD THESE NEW STYLES TO YOUR EXISTING CSS */
+
+/* Employee Photo Styles */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.employee-photo-container {
+  position: relative;
+}
+
+.employee-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.employee-photo:hover {
+  transform: scale(1.05);
+  border-color: rgba(102, 126, 234, 0.6);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+}
+
+/* Fix Info Grid for Personal Info Card */
+.info-card .info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(90px, 16vw, 120px), 1fr));
+  gap: clamp(0.5rem, 2vw, 0.875rem);
+  margin-bottom: clamp(0.75rem, 2.5vw, 1.25rem);
+  flex: 1;
+}
+
+/* Stats Section Fix */
+.stats-section {
+  border-top: 1px solid rgba(226, 232, 240, 0.7);
+  padding-top: clamp(0.875rem, 2.5vw, 1.25rem);
+}
+
+/* Task Due Date Fix */
+.task-due {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+/* CRITICAL BUTTON FIX - Add this at the END */
+button.btn-clock-in,
+button.btn-clock-out {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+}
+
+/* Responsive Photo */
+@media (max-width: 768px) {
+  .employee-photo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .employee-photo-container {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .employee-photo {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* 🆕 FIXED SALARY HIDE/REVEAL STYLES */
+.salary-item {
+  position: relative;
+}
+
+.salary-eye-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  text-decoration: none;
+  display: block;
+  margin-top: 0.25rem;
+  font-family: inherit;
+}
+
+.salary-eye-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.salary-revealed {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.salary-value {
+  font-weight: 800 !important;
+  color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.1) !important;
+  border: 2px solid rgba(16, 185, 129, 0.3) !important;
+  padding: 0.375rem 0.75rem !important;
+  border-radius: 8px !important;
+}
+
+.salary-eye-btn.hide {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  padding: 0.375rem 0.625rem;
+  font-size: 0.8rem;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.salary-eye-btn.hide:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* 🆕 FIXED SALARY PASSWORD MODAL */
+.salary-password-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.salary-password-content {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.4);
+  text-align: center;
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.salary-password-content h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.salary-password-content p {
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.password-hint {
+  color: #10b981;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+}
+
+.salary-password-input {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  border-radius: 16px;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 1);
+  backdrop-filter: blur(20px);
+  margin-bottom: 1.75rem;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.salary-password-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.salary-password-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-salary-submit,
+.btn-salary-cancel {
+  flex: 1;
+  max-width: 160px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.btn-salary-submit {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.btn-salary-submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+}
+
+.btn-salary-cancel {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  color: white;
+}
+
+.btn-salary-cancel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(107, 114, 128, 0.4);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .salary-password-actions {
+    flex-direction: column;
+  }
+}
