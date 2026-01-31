@@ -22,7 +22,6 @@ const LeaveApply = () => {
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   
-  
   const navigate = useNavigate();
 
   // Logic to calculate days for the UI
@@ -63,133 +62,135 @@ const LeaveApply = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFE] p-6 md:p-12">
-      <div className="max-w-3xl mx-auto">
+    <div className="leave-apply-container">
+      <div className="leave-apply-content">
         
         {/* Navigation Header */}
-        <div className="mb-10">
+        <div className="nav-header">
           <button 
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-slate-400 hover:text-indigo-600 font-medium transition-colors mb-4"
+            className="back-btn"
           >
             <ArrowLeft size={18} /> Back to Leave History
           </button>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Request Time Off</h1>
-          <p className="text-slate-500 mt-2">Submit your leave request for manager approval.</p>
+          <div className="page-header">
+            <h1 className="header-title">Request Time Off</h1>
+            <p className="header-subtitle">Submit your leave request for manager approval.</p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="main-grid">
           
           {/* Main Request Form */}
-          <div className="lg:col-span-8">
-            <div className="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-8 md:p-10">
+          <div className="main-form-section">
+            <div className="main-form-card">
               
               {/* Feedback States */}
               {message && (
-                <div className="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-3 text-emerald-700 animate-in fade-in slide-in-from-top-2">
+                <div className="alert-message alert-success">
                   <CheckCircle2 size={20} />
-                  <span className="text-sm font-bold">{message}</span>
+                  <span>{message}</span>
                 </div>
               )}
               
               {error && (
-                <div className="mb-8 p-4 bg-rose-50 border border-rose-100 rounded-2xl flex items-center gap-3 text-rose-600 animate-in fade-in slide-in-from-top-2">
+                <div className="alert-message alert-error">
                   <AlertCircle size={20} />
-                  <span className="text-sm font-bold">{error}</span>
+                  <span>{error}</span>
                 </div>
               )}
 
-              <div className="space-y-8">
+              <div className="form-content">
                 {/* Date Selection Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
-                      <Calendar size={14} className="text-indigo-500" /> Start Date
+                <div className="date-grid">
+                  <div className="input-field-wrapper">
+                    <label className="input-label">
+                      <Calendar size={14} /> Start Date
                     </label>
                     <input 
                       type="date" 
                       value={startDate} 
                       onChange={e => setStartDate(e.target.value)} 
-                      className="w-full p-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-medium text-slate-600"
+                      className="input-field date-input"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
-                      <Calendar size={14} className="text-rose-400" /> End Date
+                  <div className="input-field-wrapper">
+                    <label className="input-label">
+                      <Calendar size={14} /> End Date
                     </label>
                     <input 
                       type="date" 
                       value={endDate} 
                       onChange={e => setEndDate(e.target.value)} 
-                      className="w-full p-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-medium text-slate-600"
+                      className="input-field date-input"
                     />
                   </div>
                 </div>
 
                 {/* Reason Field */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest ml-1">
-                    <FileText size={14} className="text-indigo-500" /> Reason for Leave
+                <div className="input-field-wrapper">
+                  <label className="input-label">
+                    <FileText size={14} /> Reason for Leave
                   </label>
                   <textarea 
                     rows={4}
                     value={reason} 
                     onChange={e => setReason(e.target.value)} 
                     placeholder="Briefly describe the reason for your absence..." 
-                    className="w-full p-4 bg-slate-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none text-slate-600 font-medium"
+                    className="textarea-field"
                   />
                 </div>
 
                 {/* Submit Button */}
-                <button 
-                  onClick={submit} 
-                  disabled={submitting} 
-                  className={`w-full group flex items-center justify-center gap-3 bg-slate-900 hover:bg-black text-white p-5 rounded-2xl font-bold text-lg shadow-xl shadow-slate-200 transition-all active:scale-[0.98] ${
-                    submitting ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
-                >
-                  {submitting ? (
-                    <Loader2 className="animate-spin" size={20} />
-                  ) : (
-                    <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  )}
-                  {submitting ? 'Processing Request...' : 'Submit Request'}
-                </button>
+                <div className="submit-section">
+                  <button 
+                    onClick={submit} 
+                    disabled={submitting} 
+                    className="submit-btn"
+                  >
+                    {submitting ? (
+                      <Loader2 className="loader-icon" size={20} />
+                    ) : (
+                      <Send size={20} />
+                    )}
+                    {submitting ? 'Processing Request...' : 'Submit Request'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Side Info Panel */}
-          <div className="lg:col-span-4 space-y-6">
-            <div className="bg-indigo-600 rounded-[2rem] p-8 text-white shadow-xl shadow-indigo-100">
-              <CalendarDays className="mb-4 opacity-40" size={40} />
-              <h3 className="text-xl font-bold mb-2">Request Summary</h3>
-              <div className="space-y-4 mt-6">
-                <div className="flex justify-between items-center py-3 border-b border-indigo-500/50">
-                  <span className="text-indigo-100 text-sm font-medium">Total Duration</span>
-                  <span className="text-2xl font-black">{calculateDays()} Days</span>
+          <div className="side-panel">
+            <div className="summary-panel">
+              <CalendarDays size={40} />
+              <h3 className="summary-title">Request Summary</h3>
+              <div className="summary-content">
+                <div className="duration-display">
+                  <span className="duration-label">Total Duration</span>
+                  <span className="duration-value">{calculateDays()} Days</span>
                 </div>
-                <div className="p-4 bg-white/10 rounded-xl flex gap-3">
-                  <Info size={18} className="shrink-0 text-indigo-200" />
-                  <p className="text-xs leading-relaxed text-indigo-100">
+                <div className="info-box">
+                  <Info size={18} />
+                  <p>
                     Your request will be sent to your immediate supervisor for approval. You'll receive a notification once a decision is made.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-[2rem] border border-slate-100 p-8 shadow-sm">
-              <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <Info size={16} className="text-indigo-500" /> Quick Tips
+            <div className="tips-panel">
+              <h4 className="tips-header">
+                <Info size={16} /> Quick Tips
               </h4>
-              <ul className="text-sm text-slate-500 space-y-3">
-                <li className="flex gap-2">
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full mt-2 shrink-0" />
+              <ul className="tips-list">
+                <li className="tip-item">
+                  <span className="tip-dot" />
                   Apply at least 2 days in advance.
                 </li>
-                <li className="flex gap-2">
-                  <span className="w-1 h-1 bg-indigo-500 rounded-full mt-2 shrink-0" />
+                <li className="tip-item">
+                  <span className="tip-dot" />
                   Include a specific reason for faster approval.
                 </li>
               </ul>

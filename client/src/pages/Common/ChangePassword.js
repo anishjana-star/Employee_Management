@@ -10,58 +10,56 @@ const ChangePassword = () => {
   const [confirm, setConfirm] = useState('');
   const [msg, setMsg] = useState({ type: '', text: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState({ old: false, new: false, confirm: false }); // Individual toggles
   
   const navigate = useNavigate();
 
   const submit = async () => {
     setMsg({ type: '', text: '' });
     
-    if (!oldPassword || !newPassword) {
-      return setMsg({ type: 'error', text: 'All fields are required' });
+    if (!oldPassword || !newPassword || !confirm) {
+      return setMsg({ type: 'error', text: 'Please fill Current, New, and Retype Password' });
     }
     if (newPassword !== confirm) {
-      return setMsg({ type: 'error', text: 'Passwords do not match' });
+      return setMsg({ type: 'error', text: 'New Password and Retype Password do not match' });
     }
     if (newPassword.length < 6) {
-      return setMsg({ type: 'error', text: 'New password must be at least 6 characters' });
+      return setMsg({ type: 'error', text: 'New Password must be at least 6 characters' });
     }
 
     try {
       setIsSubmitting(true);
       await changeMyPassword(oldPassword, newPassword);
-      setMsg({ type: 'success', text: 'Security updated! Redirecting to home...' });
+      setMsg({ type: 'success', text: 'Password changed! Redirecting to home...' });
       setTimeout(() => navigate('/'), 1200);
     } catch (err) {
-      setMsg({ type: 'error', text: err.message || 'Verification failed' });
+      setMsg({ type: 'error', text: err.message || 'Password change failed' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const InputField = ({ label, placeholder, value, setter, id }) => (
+  const InputField = ({ label, placeholder, value, setter, id, showKey }) => (
     <div className="input-field-wrapper">
-      <label htmlFor={id} className="input-label">
-        {label}
-      </label>
+      <label htmlFor={id} className="input-label">{label}</label>
       <div className="input-container">
         <Lock className="input-icon" size={18} />
         <input 
           id={id}
-          type={showPass ? "text" : "password"}
+          type={showPass[showKey] ? "text" : "password"}
           placeholder={placeholder}
           value={value} 
           onChange={e => setter(e.target.value)} 
           className="input-field"
-          autoComplete="new-password"
+          autoComplete={id.includes('old') ? "current-password" : "new-password"}
         />
         <button 
           type="button"
-          onClick={() => setShowPass(!showPass)}
+          onClick={() => setShowPass(prev => ({ ...prev, [showKey]: !prev[showKey] }))}
           className="password-toggle"
-          aria-label="Toggle password visibility"
+          aria-label={`Toggle ${label} visibility`}
         >
-          {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
+          {showPass[showKey] ? <EyeOff size={18} /> : <Eye size={18} />}
         </button>
       </div>
     </div>
@@ -70,31 +68,19 @@ const ChangePassword = () => {
   return (
     <div className="change-password-container">
       <div className="change-password-card">
-        {/* Back Button */}
-        <button 
-          onClick={() => navigate(-1)}
-          className="back-btn"
-          aria-label="Go back"
-        >
-          <ArrowLeft size={16} /> 
-          Back
+        <button onClick={() => navigate(-1)} className="back-btn" aria-label="Go back">
+          <ArrowLeft size={16} /> Back
         </button>
 
         <div className="main-card">
-          {/* Header Banner */}
           <div className="header-banner">
-            <div className="shield-icon-bg">
-              <ShieldCheck size={160} />
-            </div>
-            <div className="shield-icon-main">
-              <ShieldCheck className="text-white" size={32} />
-            </div>
-            <h2 className="header-title">Security Update</h2>
-            <p className="header-subtitle">Keep your account safe and secure</p>
+            <div className="shield-icon-bg"><ShieldCheck size={140} /></div>
+            <div className="shield-icon-main"><ShieldCheck className="text-white" size={28} /></div>
+            <h2 className="header-title">Change Password</h2>
+            <p className="header-subtitle">Current, New & Retype Password</p>
           </div>
 
           <div className="content-area">
-            {/* Alert Messages */}
             {msg.text && (
               <div className={`alert-message ${msg.type === 'error' ? 'alert-error' : 'alert-success'}`}>
                 {msg.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
@@ -102,56 +88,55 @@ const ChangePassword = () => {
               </div>
             )}
 
-            {/* INPUT GRID - Auto stacks vertically on all devices */}
             <div className="input-grid">
               <InputField 
-                id="old-password"
+                id="current-password"
                 label="Current Password" 
-                placeholder="••••••••" 
+                placeholder="Enter current password"
                 value={oldPassword} 
-                setter={setOldPassword} 
+                setter={setOldPassword}
+                showKey="old"
               />
-              
               <div className="divider" />
 
               <InputField 
                 id="new-password"
                 label="New Password" 
-                placeholder="Min. 6 characters" 
+                placeholder="Minimum 6 characters"
                 value={newPassword} 
-                setter={setNewPassword} 
+                setter={setNewPassword}
+                showKey="new"
               />
 
               <InputField 
-                id="confirm-password"
-                label="Confirm New Password" 
-                placeholder="Repeat new password" 
+                id="retype-password"
+                label="Retype Password" 
+                placeholder="Confirm new password"
                 value={confirm} 
-                setter={setConfirm} 
+                setter={setConfirm}
+                showKey="confirm"
               />
             </div>
 
-            {/* Submit Button */}
             <div className="submit-section">
               <button 
                 onClick={submit} 
-                disabled={isSubmitting} 
+                disabled={isSubmitting}
                 className="submit-btn"
               >
                 {isSubmitting ? (
                   <>
                     <Loader2 className="loader-icon" />
-                    Updating Security...
+                    Changing Password...
                   </>
                 ) : (
-                  'Update Password'
+                  'Change Password'
                 )}
               </button>
             </div>
             
-            {/* Footer */}
             <p className="footer-text">
-              Logged in as admin. Last change: {new Date().toLocaleDateString()}
+              Secure update • {new Date().toLocaleDateString()}
             </p>
           </div>
         </div>

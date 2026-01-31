@@ -1,238 +1,335 @@
+/* EmployeeList.css - PERFECT FOR YOUR HTML STRUCTURE */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
 .employee-list {
-  padding: 3rem 2rem;
+  font-family: 'Inter', sans-serif;
+  padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 5vw, 2rem);
   min-height: 100vh;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(120, 119, 198, 0.03) 50%, rgba(255, 119, 198, 0.03) 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
   position: relative;
   overflow-x: hidden;
-}
-
-/* Modal overlay - prevents background scrolling */
-.employee-list.modal-open {
-  overflow: hidden;
-}
-
-.employee-list.modal-open::before {
-  /* Keep background effect but prevent interaction */
-  pointer-events: none;
 }
 
 .employee-list::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(102, 126, 234, 0.08) 0%, transparent 50%);
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.04) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
 
+.employee-list.modal-open {
+  overflow: hidden;
+}
+
+/* HEADER */
 .page-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 3rem;
+  flex-direction: column;
+  gap: clamp(1.25rem, 3.5vw, 2rem);
+  margin-bottom: clamp(3rem, 7vw, 4rem);
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .page-header h1 {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 6vw, 3.75rem);
   font-weight: 800;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.05em;
+  line-height: 1.2;
 }
 
+/* BUTTON */
 .btn-primary {
-  padding: 1.25rem 2.5rem;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+  padding: clamp(1rem, 2.8vw, 1.375rem) clamp(2rem, 5vw, 3rem);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 24px;
-  font-size: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2rem;
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 
-    0 12px 32px rgba(102, 126, 234, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
   position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s;
+  z-index: 15;
+  min-height: clamp(56px, 12vw, 68px);
 }
 
 .btn-primary:hover {
   transform: translateY(-4px);
-  box-shadow: 
-    0 20px 48px rgba(102, 126, 234, 0.4),
-    0 8px 20px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 30px 70px rgba(102, 126, 234, 0.4);
 }
 
-.btn-primary:hover::before {
-  left: 100%;
-}
-
-.btn-primary:active {
-  transform: translateY(-2px);
-}
-
+/* MAIN GRID */
 .employee-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(320px, 28vw, 420px), 1fr));
+  gap: clamp(1.5rem, 4vw, 2.5rem);
   position: relative;
-  z-index: 1;
-  padding-bottom: 2rem;
+  z-index: 10;
+  padding-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+/* ✅ YOUR HTML STRUCTURE - 2-LINE LEFT-ALIGNED (ALL DEVICES) */
+.employee-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: clamp(140px, 24vw, 200px);
+}
+
+/* ✅ YOUR employee-header - LINE 1+2 CONTAINER */
+.employee-header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  width: 100%;
+  align-items: flex-start;
+  /* LEFT ALIGN */
+}
+
+/* LINE 1: NAME (h3) - LEFT ALIGNED */
+.employee-header h3 {
+  font-size: clamp(1.375rem, 4.5vw, 2.25rem);
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.25;
+  margin: 0 !important;
+  padding: 0;
+  text-align: left;
+  letter-spacing: -0.025em;
+  width: 100%;
+}
+
+/* LINE 2: EMAIL (span) - LEFT ALIGNED BADGE */
+.employee-email {
+  font-size: clamp(1rem, 3vw, 1.375rem);
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 !important;
+  padding: clamp(0.75rem, 2.5vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+  background: rgba(102, 126, 234, 0.12);
+  border-radius: 1.25rem;
+  border-left: 5px solid #667eea;
+  text-align: left;
+  align-self: flex-start;
+  /* LEFT ALIGN */
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  .employee-list {
+    padding: 1.25rem 1rem;
+  }
+
+  .employee-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+
+  .employee-card {
+    padding: 1.75rem 1.25rem;
+    min-height: 150px;
+  }
+
+  .employee-header h3 {
+    font-size: 1.625rem;
+  }
+
+  .employee-email {
+    font-size: 1.125rem;
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+/* TABLET */
+@media (min-width: 481px) and (max-width: 768px) {
+  .employee-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* LAPTOP */
+@media (min-width: 769px) {
+  .employee-grid {
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .employee-list {
+    padding: clamp(3rem, 4vw, 5rem) clamp(4rem, 6vw, 10rem);
+  }
+
+  .employee-grid {
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 3rem;
+  }
+
+  .employee-card {
+    min-height: 190px;
+    padding: 3rem 2.5rem;
+  }
+
+  .employee-header h3 {
+    font-size: 2.25rem;
+  }
+
+  .employee-email {
+    font-size: 1.375rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .employee-grid {
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 3.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .employee-grid {
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 4rem;
+  }
+}
+
+/* LOADING & ERROR */
+.loading,
+.error-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: clamp(2.5rem, 6vw, 4rem);
+  margin: clamp(2rem, 6vw, 3rem) auto;
+  border-radius: 2rem;
+  backdrop-filter: blur(20px);
+  max-width: clamp(350px, 45vw, 500px);
 }
 
 .loading {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: rgba(74, 85, 104, 0.7);
-  font-size: 1.2rem;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-  margin: 2rem auto;
-  max-width: 400px;
+  color: #64748b;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
-}
-
 .error-message {
-  background: rgba(220, 38, 38, 0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(220, 38, 38, 0.3);
+  background: rgba(239, 68, 68, 0.15);
   color: #dc2626;
-  padding: 1.5rem 2rem;
-  border-radius: 20px;
-  margin-bottom: 2rem;
-  font-weight: 600;
-  font-size: 1rem;
-  box-shadow: 
-    0 12px 32px rgba(220, 38, 38, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-left: 5px solid #dc2626;
-  animation: slideInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-left: 6px solid #ef4444;
 }
 
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
+/* ANIMATIONS */
+@keyframes pulse {
+
+  0%,
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
   }
 }
 
-/* Empty state */
+/* EMPTY STATE */
 .employee-grid:empty::before {
-  content: 'No employees found. Add your first employee!';
+  content: '👥 No employees found. Add your first employee!';
   grid-column: 1 / -1;
-  text-align: center;
-  padding: 4rem 2rem;
-  color: rgba(74, 85, 104, 0.6);
-  font-size: 1.1rem;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5rem, 12vw, 8rem);
+  color: #9ca3af;
+  font-size: clamp(1.125rem, 3vw, 1.375rem);
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(25px);
+  border-radius: 2.5rem;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  .employee-list {
-    padding: 2rem 1rem;
-  }
-  
-  .page-header {
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: center;
-  }
-  
-  .page-header h1 {
-    font-size: 2rem;
-  }
-  
-  .employee-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+/* HOVER EFFECTS */
+.employee-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 35px 80px rgba(102, 126, 234, 0.2);
 }
 
-@media (max-width: 480px) {
-  .btn-primary {
-    width: 100%;
-    padding: 1.25rem;
-  }
+/* SELECTED STATE */
+.employee-card.selected {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
-/* Smooth scroll for grid */
-.employee-grid {
-  scroll-behavior: smooth;
+.employee-card.selected .employee-header h3,
+.employee-card.selected .employee-email {
+  color: white !important;
 }
 
-/* Custom scrollbar for the page */
+/* SCROLLBAR */
 .employee-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.employee-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  width: clamp(6px, 1vw, 10px);
 }
 
 .employee-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 12px;
 }
 
-.employee-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* Disable scrollbars when modal is open */
 .employee-list.modal-open::-webkit-scrollbar {
   display: none;
 }
 
-.employee-list.modal-open::-webkit-scrollbar-track,
-.employee-list.modal-open::-webkit-scrollbar-thumb {
-  display: none;
+/* ACCESSIBILITY */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.btn-primary:focus-visible {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
 }

@@ -7,12 +7,13 @@
 
 .employee-dashboard {
   font-family: 'Inter', sans-serif;
-  padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 5vw, 6rem);
+  padding: clamp(0.125rem, 0.5vw, 0.5rem) clamp(0rem, 0.5vw, 0.5rem);
   min-height: 100vh;
   position: relative;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
-  z-index: 1; /* Ensure dashboard is clickable */
+  z-index: 1;
 }
+
 
 .employee-dashboard::before {
   content: '';
@@ -661,5 +662,26 @@ button.btn-clock-out {
 @media (max-width: 480px) {
   .salary-password-actions {
     flex-direction: column;
+  }
+}
+
+
+/* 🆕 LAPTOP: Title few upper, perfect card spacing */
+@media (min-width: 1025px) {
+  .employee-dashboard {
+    padding-top: 0.5rem;
+    /* Title moves higher */
+    padding-left: clamp(1rem, 2vw, 3rem);
+    padding-right: clamp(1rem, 2vw, 3rem);
+  }
+
+  .employee-dashboard h1 {
+    margin-top: 0.25rem;
+    /* Even higher */
+    margin-bottom: 1rem;
+  }
+
+  .dashboard-grid {
+    gap: 1.25rem;
   }
 }

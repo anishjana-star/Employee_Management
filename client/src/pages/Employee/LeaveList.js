@@ -36,21 +36,21 @@ const LeaveList = () => {
     switch (status) {
       case 'approved':
         return {
-          bg: 'bg-emerald-50',
+          bg: 'status-approved',
           text: 'text-emerald-700',
           border: 'border-emerald-100',
           icon: <CheckCircle2 size={14} />
         };
       case 'declined':
         return {
-          bg: 'bg-rose-50',
+          bg: 'status-declined',
           text: 'text-rose-700',
           border: 'border-rose-100',
           icon: <XCircle size={14} />
         };
       default:
         return {
-          bg: 'bg-amber-50',
+          bg: 'status-pending',
           text: 'text-amber-700',
           border: 'border-amber-100',
           icon: <Clock size={14} />
@@ -59,18 +59,18 @@ const LeaveList = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] p-6 md:p-12">
-      <div className="max-w-4xl mx-auto">
+    <div className="leave-list-container">
+      <div className="leave-list-content">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+        <div className="leave-header">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">My Leaves</h1>
-            <p className="text-slate-500 mt-1 font-medium">History and status of your time-off requests.</p>
+            <h1 className="header-title">My Leaves</h1>
+            <p className="header-subtitle">History and status of your time-off requests.</p>
           </div>
           <Link 
             to="/employee/leaves/apply" 
-            className="flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-100 transition-all active:scale-95"
+            className="apply-btn"
           >
             <Plus size={20} />
             Apply for Leave
@@ -79,73 +79,70 @@ const LeaveList = () => {
 
         {/* Content */}
         {loading ? (
-          <div className="space-y-4">
+          <div className="leaves-grid">
             {[1, 2, 3].map((n) => (
-              <div key={n} className="h-32 bg-white rounded-3xl animate-pulse border border-slate-100" />
+              <div key={n} className="loading-skeleton" />
             ))}
           </div>
         ) : leaves.length === 0 ? (
-          <div className="bg-white rounded-[2.5rem] p-12 text-center border border-slate-100 shadow-sm">
-            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Inbox size={40} className="text-slate-300" />
+          <div className="empty-state">
+            <div className="empty-icon">
+              <Inbox size={40} />
             </div>
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">No leave requests yet</h2>
-            <p className="text-slate-500 max-w-sm mx-auto mb-8 font-medium">
+            <h2 className="empty-title">No leave requests yet</h2>
+            <p className="empty-subtitle">
               When you apply for time off, your requests and their approval status will appear here.
             </p>
             <Link 
               to="/employee/leaves/apply" 
-              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-black text-white px-8 py-3.5 rounded-2xl font-bold transition-all"
+              className="apply-btn empty-cta"
             >
               Start First Request <ArrowRight size={18} />
             </Link>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="leaves-grid">
             {leaves.map((l) => {
               const status = getStatusStyles(l.status);
               return (
-                <div 
-                  key={l._id} 
-                  className="group bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md hover:border-indigo-100 transition-all duration-300"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div key={l._id} className="leave-card">
+                  <div className="card-content">
                     
                     {/* Left: Info */}
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2.5 bg-slate-50 text-slate-500 rounded-xl group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-colors">
+                    <div className="date-info">
+                      <div className="date-header">
+                        <div className="date-icon">
                           <CalendarDays size={20} />
                         </div>
-                        <span className="text-lg font-bold text-slate-800">
+                        <span className="date-text">
                           {new Date(l.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                          <span className="mx-2 text-slate-300">—</span>
+                          <span className="date-range">—</span>
                           {new Date(l.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                         </span>
                       </div>
                       
                       {l.reason && (
-                        <p className="text-slate-500 text-sm italic ml-1 line-clamp-1 max-w-md">
+                        <p className="reason-text">
                           "{l.reason}"
                         </p>
                       )}
                     </div>
 
                     {/* Right: Status & Metadata */}
-                    <div className="flex flex-col md:items-end gap-3">
-                      <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${status.bg} ${status.text} ${status.border}`}>
+                    <div className="right-section">
+                      <div className={`status-badge ${status.bg}`}>
                         {status.icon}
                         {l.status}
                       </div>
                       
-                      <div className="flex flex-col md:items-end gap-1">
-                        <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400">
+                      <div className="metadata">
+                        <div className="metadata-item">
                           <HelpCircle size={12} />
                           Applied {new Date(l.appliedAt).toLocaleDateString()}
                         </div>
                         
                         {l.decidedBy && (
-                          <div className="flex items-center gap-1.5 text-[11px] font-bold text-indigo-500/70">
+                          <div className="metadata-item metadata-reviewed">
                             <UserCheck size={12} />
                             Reviewed by {l.decidedBy.name}
                           </div>
@@ -156,10 +153,10 @@ const LeaveList = () => {
 
                   {/* Re-apply Action for Declined Leaves */}
                   {l.status === 'declined' && (
-                    <div className="mt-4 pt-4 border-t border-slate-50">
+                    <div className="reapply-section">
                       <Link 
                         to="/employee/leaves/apply" 
-                        className="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-600 hover:text-indigo-700 transition-colors"
+                        className="reapply-link"
                       >
                         Modify & Re-apply <ArrowRight size={14} />
                       </Link>
@@ -172,13 +169,13 @@ const LeaveList = () => {
         )}
 
         {/* Footer Info */}
-        <div className="mt-12 p-6 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 flex items-start gap-4">
-          <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+        <div className="footer-info">
+          <div className="footer-icon">
             <HelpCircle size={18} />
           </div>
-          <div>
-            <h4 className="text-sm font-bold text-indigo-900">Need help?</h4>
-            <p className="text-xs text-indigo-700/70 mt-0.5 leading-relaxed">
+          <div className="footer-content">
+            <h4>Need help?</h4>
+            <p>
               If your request is pending for more than 48 hours, please contact HR or your direct manager for a manual review.
             </p>
           </div>

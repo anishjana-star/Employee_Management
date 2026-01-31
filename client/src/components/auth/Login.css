@@ -156,7 +156,12 @@
 }
 
 .btn-primary {
-  width: 100%;
+  width: auto;                 /* 🔧 changed */
+  min-width: 220px;            /* ✅ consistent size */
+  max-width: 100%;
+  margin: 0 auto;              /* ✅ center horizontally */
+  display: block;              /* ✅ required for margin auto */
+
   padding: 1.5rem 2rem;
   background: linear-gradient(135deg, #27ae60 0%, #219a52 100%);
   backdrop-filter: blur(20px);
@@ -177,6 +182,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
 
 .btn-primary::before {
   content: '';

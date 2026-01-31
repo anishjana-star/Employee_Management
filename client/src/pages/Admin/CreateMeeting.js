@@ -69,6 +69,7 @@ const CreateMeeting = () => {
   return (
     <div className="min-h-screen">
       <div className="max-w-5xl">
+        
         {/* Header */}
         <div className="header-section">
           <button 
@@ -93,6 +94,7 @@ const CreateMeeting = () => {
 
         {/* Main Grid */}
         <div className="main-grid">
+          
           {/* Left Column: Details */}
           <div className="form-card">
             <div className="form-field">
@@ -164,7 +166,7 @@ const CreateMeeting = () => {
             </div>
             
             <div className="search-container">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+              <Search size={16} />
               <input 
                 type="text"
                 placeholder="Search employees..."
@@ -221,7 +223,7 @@ const CreateMeeting = () => {
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="animate-spin" size={20} />
+                <Loader2 size={20} />
                 Scheduling...
               </>
             ) : (
